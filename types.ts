@@ -8,7 +8,16 @@ export type QRType =
   | 'vcard' 
   | 'location' 
   | 'event' 
-  | 'crypto';
+  | 'crypto'
+  | 'whatsapp'
+  | 'paypal'
+  | 'instagram'
+  | 'facebook'
+  | 'twitter'
+  | 'youtube'
+  | 'image'
+  | 'file'
+  | 'microsite';
 
 export type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H';
 export type DotStyle = 'square' | 'rounded' | 'dots' | 'classy' | 'classy-rounded';
@@ -50,4 +59,28 @@ export interface QRCustomOptions {
 export interface QRData {
   type: QRType;
   content: string;
+}
+
+// Microsite / Page Builder Types
+export type MicrositeLinkType = 'link' | 'file' | 'image' | 'video' | 'product';
+
+export interface MicrositeLink {
+  id: string;
+  type: MicrositeLinkType;
+  label: string;
+  subLabel?: string;
+  url: string;
+  imageUrl?: string; // Used for product images
+  price?: string;
+  currency?: string;
+  icon: 'link' | 'instagram' | 'twitter' | 'facebook' | 'youtube' | 'github' | 'linkedin' | 'mail' | 'phone' | 'file' | 'image' | 'video' | 'download' | 'shopping-bag';
+}
+
+export interface MicrositeConfig {
+  title: string;
+  description: string;
+  imageUrl: string; // URL or Base64
+  themeColor: string;
+  buttonStyle: 'rounded' | 'square' | 'pill';
+  links: MicrositeLink[];
 }

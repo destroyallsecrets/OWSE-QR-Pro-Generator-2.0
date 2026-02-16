@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { QRCodeGenerator } from './components/qr/QRCodeGenerator';
+import { MicrositeViewer } from './components/microsite/MicrositeViewer';
 import { QrCode, Moon, Sun } from 'lucide-react';
 import { Button } from './components/ui/Layout';
+import { decodeMicrositeData } from './lib/utils';
 
 const App: React.FC = () => {
   const [isDark, setIsDark] = useState(false);
+  const [viewData, setViewData] = useState<any>(null);
 
   useEffect(() => {
     // Check local storage or system preference
@@ -14,6 +17,16 @@ const App: React.FC = () => {
     } else {
       setIsDark(false);
       document.documentElement.classList.remove('dark');
+    }
+
+    // Check for Microsite View Mode (?p=DATA)
+    const params = new URLSearchParams(window.location.search);
+    const pageData = params.get('p');
+    if (pageData) {
+      const decoded = decodeMicrositeData(pageData);
+      if (decoded) {
+        setViewData(decoded);
+      }
     }
   }, []);
 
@@ -28,6 +41,11 @@ const App: React.FC = () => {
       setIsDark(true);
     }
   };
+
+  // If viewing a microsite, render ONLY the viewer
+  if (viewData) {
+    return <MicrositeViewer data={viewData} />;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300">

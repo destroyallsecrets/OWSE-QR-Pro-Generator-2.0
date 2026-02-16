@@ -13,3 +13,24 @@ export const hexToRgb = (hex: string) => {
     b: parseInt(result[3], 16)
   } : null;
 }
+
+// Simple Base64 encoding/decoding for JSON objects (URL safe)
+export const encodeMicrositeData = (data: any): string => {
+  try {
+    const json = JSON.stringify(data);
+    return btoa(encodeURIComponent(json));
+  } catch (e) {
+    console.error("Encoding error", e);
+    return "";
+  }
+};
+
+export const decodeMicrositeData = (str: string): any => {
+  try {
+    const json = decodeURIComponent(atob(str));
+    return JSON.parse(json);
+  } catch (e) {
+    console.error("Decoding error", e);
+    return null;
+  }
+};
