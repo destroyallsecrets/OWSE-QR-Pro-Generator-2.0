@@ -35,10 +35,10 @@ export const QRCodeGenerator: React.FC = () => {
   });
 
   return (
-    <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 pb-20">
+    <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 pb-20 items-start">
       
       {/* Left Column: Input & Customization */}
-      <div className="lg:col-span-7 space-y-6">
+      <div className="w-full lg:w-7/12 space-y-6">
         <QRTypeSelector 
           data={qrData} 
           onChange={setQrData} 
@@ -51,17 +51,19 @@ export const QRCodeGenerator: React.FC = () => {
       </div>
 
       {/* Right Column: Preview & Download (Sticky) */}
-      <div className="lg:col-span-5 lg:sticky lg:top-8 h-fit space-y-6">
+      <div className="w-full lg:w-5/12 lg:sticky lg:top-24 space-y-6">
          <div className="text-center lg:text-left mb-2">
             <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">Preview</h2>
             <p className="text-sm text-slate-500 dark:text-slate-400">Live preview of your design</p>
          </div>
          
-         <QRPreview 
-           ref={qrRef} 
-           content={qrData.content} 
-           options={options} 
-         />
+         <div className="w-full max-w-lg mx-auto lg:mx-0">
+           <QRPreview 
+             ref={qrRef} 
+             content={qrData.content} 
+             options={options} 
+           />
+         </div>
 
          <QRDownload qrRef={qrRef} />
       </div>
